@@ -1,0 +1,50 @@
+/* Activity */
+
+.activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.activity-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 8px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(30, 64, 175, 0.35);
+}
+
+.activity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  margin-top: 4px;
+}
+
+.activity-info .activity-dot {
+  background: var(--accent);
+}
+
+.activity-success .activity-dot {
+  background: var(--success);
+}
+
+.activity-warning .activity-dot {
+  background: var(--warning);
+}
+
+.activity-message {
+  margin: 0;
+  font-size: 13px;
+}
+
+.activity-time {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: var(--text-muted);
+}

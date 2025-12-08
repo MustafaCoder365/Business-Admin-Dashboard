@@ -1,0 +1,16 @@
+/* Charts */
+
+.charts-row {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap: 14px;
+}
+
+.chart-card {
+  padding-bottom: 12px;
+}
+
+.chart-wrapper {
+  width: 100%;
+  height: 260px;
+}
