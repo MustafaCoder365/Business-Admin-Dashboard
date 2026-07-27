@@ -41,19 +41,19 @@ A modern, fully responsive **Business Admin Dashboard** built with **React**, **
 
 | Dashboard | Users |
 |-----------|-------|
-| _add screenshot_ | _add screenshot_ |
+| ![Dashboard](screenshots/dashboard.png) | ![Users](screenshots/users.png) |
 
 | Orders | Products |
 |--------|----------|
-| _add screenshot_ | _add screenshot_ |
+| ![Orders](screenshots/orders.png) | ![Products](screenshots/products.png) |
 
 | Reports | Settings |
 |---------|----------|
-| _add screenshot_ | _add screenshot_ |
+| ![Reports](screenshots/reports.png) | ![Settings](screenshots/settings.png) |
 
 | Command Palette | Dark Mode |
 |------------------|-----------|
-| _add screenshot_ | _add screenshot_ |
+| ![Command Palette](screenshots/command-palette.png) | ![Dark Mode](screenshots/dark-mode.png) |
 
 ## 📂 Project Structure
 
