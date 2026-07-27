@@ -1,0 +1,42 @@
+export const notifications = [
+  {
+    id: 1,
+    title: 'New order received',
+    message: 'Order #1042 placed by Ali Hassan.',
+    time: '5 min ago',
+    type: 'success',
+    read: false,
+  },
+  {
+    id: 2,
+    title: 'Low stock warning',
+    message: 'Wireless Mouse is running low on stock.',
+    time: '22 min ago',
+    type: 'warning',
+    read: false,
+  },
+  {
+    id: 3,
+    title: 'Report ready',
+    message: 'Your Sales Report for last 30 days is ready.',
+    time: '1 hr ago',
+    type: 'info',
+    read: false,
+  },
+  {
+    id: 4,
+    title: 'New user registered',
+    message: 'Layla Nasser joined as Support.',
+    time: '3 hr ago',
+    type: 'info',
+    read: true,
+  },
+  {
+    id: 5,
+    title: 'Server response time',
+    message: 'Response time increased above normal threshold.',
+    time: '5 hr ago',
+    type: 'warning',
+    read: true,
+  },
+];

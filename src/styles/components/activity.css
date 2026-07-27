@@ -13,34 +13,42 @@
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  padding: 8px 8px;
+  padding: 10px 10px;
   border-radius: 10px;
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(30, 64, 175, 0.35);
+  background: var(--bg-body);
+  border: 1px solid var(--border-subtle);
 }
 
 .activity-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-size: 13px;
 }
 
 .activity-info .activity-dot {
-  background: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
 .activity-success .activity-dot {
-  background: var(--success);
+  background: var(--success-soft);
+  color: var(--success);
 }
 
 .activity-warning .activity-dot {
-  background: var(--warning);
+  background: var(--warning-soft);
+  color: var(--warning);
 }
 
 .activity-message {
   margin: 0;
   font-size: 13px;
+  color: var(--text-main);
 }
 
 .activity-time {

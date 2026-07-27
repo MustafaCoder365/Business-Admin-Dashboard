@@ -25,11 +25,18 @@ export default function RevenueChart() {
       <div className="chart-wrapper">
         <ResponsiveContainer width="100%" height={260}>
           <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="revenue" fill="#22c55e" radius={[6, 6, 0, 0]} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <XAxis dataKey="name" stroke="#64748b" tick={{ fontSize: 12 }} />
+            <YAxis stroke="#64748b" tick={{ fontSize: 12 }} />
+            <Tooltip
+              contentStyle={{
+                background: '#ffffff',
+                border: '1px solid #e2e8f0',
+                borderRadius: 10,
+                fontSize: 13,
+              }}
+            />
+            <Bar dataKey="revenue" fill="#0ea5e9" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

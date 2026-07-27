@@ -1,25 +1,66 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { fetchUsers } from '../api/mockApi';
+import { exportToCsv } from '../utils/csv';
+import { useSortableData } from '../utils/useSortableData';
+import SortableHeader from './SortableHeader';
+import Pagination from './Pagination';
+import UserDetailDrawer from './UserDetailDrawer';
+
+const PAGE_SIZE = 5;
 
 export default function UsersTable({ fullHeight }) {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [page, setPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     fetchUsers().then(setUsers);
   }, []);
 
-  const filtered = users.filter((u) => {
-    const matchesSearch =
-      u.name.toLowerCase().includes(search.toLowerCase()) ||
-      u.country.toLowerCase().includes(search.toLowerCase());
+  const filtered = useMemo(() => {
+    return users.filter((u) => {
+      const matchesSearch =
+        u.name.toLowerCase().includes(search.toLowerCase()) ||
+        u.country.toLowerCase().includes(search.toLowerCase());
 
-    const matchesStatus =
-      statusFilter === 'all' || u.status.toLowerCase() === statusFilter;
+      const matchesStatus =
+        statusFilter === 'all' || u.status.toLowerCase() === statusFilter;
 
-    return matchesSearch && matchesStatus;
-  });
+      return matchesSearch && matchesStatus;
+    });
+  }, [users, search, statusFilter]);
+
+  const { sorted, sortKey, sortDir, requestSort } = useSortableData(
+    filtered,
+    'name'
+  );
+
+  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
+  const pageItems = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  function handleSearchChange(value) {
+    setSearch(value);
+    setPage(1);
+  }
+
+  function handleStatusChange(value) {
+    setStatusFilter(value);
+    setPage(1);
+  }
+
+  function handleExport() {
+    exportToCsv(
+      'users.csv',
+      sorted.map((u) => ({
+        name: u.name,
+        role: u.role,
+        country: u.country,
+        status: u.status,
+      }))
+    );
+  }
 
   return (
     <article className={`card table-card ${fullHeight ? 'full-height' : ''}`}>
@@ -34,17 +75,26 @@ export default function UsersTable({ fullHeight }) {
             type="text"
             placeholder="Search name or country..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
           />
           <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
+            onChange={(e) => handleStatusChange(e.target.value)}
           >
             <option value="all">All</option>
             <option value="active">Active</option>
             <option value="pending">Pending</option>
             <option value="inactive">Inactive</option>
           </select>
+          <button
+            type="button"
+            className="icon-action-btn"
+            onClick={handleExport}
+            aria-label="Export users to CSV"
+            title="Export CSV"
+          >
+            <i className="bi bi-download" aria-hidden="true" />
+          </button>
         </div>
       </div>
 
@@ -52,15 +102,43 @@ export default function UsersTable({ fullHeight }) {
         <table className="data-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Role</th>
-              <th>Country</th>
-              <th>Status</th>
+              <SortableHeader
+                label="Name"
+                sortKey="name"
+                activeKey={sortKey}
+                dir={sortDir}
+                onSort={requestSort}
+              />
+              <SortableHeader
+                label="Role"
+                sortKey="role"
+                activeKey={sortKey}
+                dir={sortDir}
+                onSort={requestSort}
+              />
+              <SortableHeader
+                label="Country"
+                sortKey="country"
+                activeKey={sortKey}
+                dir={sortDir}
+                onSort={requestSort}
+              />
+              <SortableHeader
+                label="Status"
+                sortKey="status"
+                activeKey={sortKey}
+                dir={sortDir}
+                onSort={requestSort}
+              />
             </tr>
           </thead>
           <tbody>
-            {filtered.map((u) => (
-              <tr key={u.id}>
+            {pageItems.map((u) => (
+              <tr
+                key={u.id}
+                className="clickable-row"
+                onClick={() => setSelectedUser(u)}
+              >
                 <td>{u.name}</td>
                 <td>{u.role}</td>
                 <td>{u.country}</td>
@@ -73,7 +151,7 @@ export default function UsersTable({ fullHeight }) {
                 </td>
               </tr>
             ))}
-            {filtered.length === 0 && (
+            {pageItems.length === 0 && (
               <tr>
                 <td colSpan="4">No users match your filters.</td>
               </tr>
@@ -81,6 +159,13 @@ export default function UsersTable({ fullHeight }) {
           </tbody>
         </table>
       </div>
+
+      <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+
+      <UserDetailDrawer
+        user={selectedUser}
+        onClose={() => setSelectedUser(null)}
+      />
     </article>
   );
 }
